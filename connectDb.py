@@ -5,6 +5,6 @@ def getConn():
                              user='root',
                              password='123456',
                              db='hackforchristmas',
-                             charset='utf8mb4',
+                             charset='utf8',
                              cursorclass=pymysql.cursors.DictCursor)
     return cnx

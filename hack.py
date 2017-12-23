@@ -59,7 +59,6 @@ def queryEvent(userId, eventId="DEFAULT"):
     """
     return 
     {
-        userId: '',
         eventList: [
             {
                 eventId: '',
@@ -91,6 +90,7 @@ def queryEvent(userId, eventId="DEFAULT"):
         print (err)
     finally:
         cnx.close()
+        print ('returning ..... >>>', resResult)
         return resResult
 
 @hug.post('/event/modify', versions=VERSION)
