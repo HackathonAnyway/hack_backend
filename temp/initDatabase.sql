@@ -10,7 +10,8 @@ CREATE TABLE TB_EVENT (
     eventStarttime varchar(15),
     eventLocation varchar(200) NOT NULL,
     eventPeriod varchar(15) NOT NULL,
-    eventFlag int NOT NULL
+    eventFlag int NOT NULL,
+    eventEndTime varchar(15)
 );
 
 CREATE TABLE TB_USER (

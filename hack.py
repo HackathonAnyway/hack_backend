@@ -4,6 +4,7 @@ import hug
 import connectDb
 import uuid
 from falcon import HTTP_400
+import time
 
 @hug.post('/happy_birthday')
 def happy_birthday(name, age:hug.types.number=1):
@@ -17,7 +18,8 @@ def addEvent(eventName, location, startTime, period, flag:hug.types.number=0):
     try:
         cnx = connectDb.getConn()
         with cnx.cursor() as cursor:
-            sql = 'INSERT INTO TB_EVENT VALUES(\'{0}\', \'{1}\', \'{2}\', \'{3}\', \'{4}\', \'{5}\')'.format(str(uuid.uuid4()), eventName, startTime, location, period, flag)
+            sql = 'INSERT INTO TB_EVENT (eventId, eventName, eventStarttime, eventLocation, eventPeriod, eventFlag ) VALUES(\'{0}\', \'{1}\', \'{2}\', \'{3}\', \'{4}\', \'{5}\')'.format(str(uuid.uuid4()), eventName, startTime, location, period, flag)
+            print (sql)
             cursor.execute(sql)
             resResult = "success"
             cnx.commit()
@@ -92,15 +94,19 @@ def queryEvent(userId, eventId="DEFAULT"):
         return resResult
 
 @hug.post('/event/modify', versions=VERSION)
-def modifyEvent(eventId, eventName, eventStarttime, eventLocation, eventPeriod, eventFlag):
+def modifyEvent(eventId, eventFlag):
     try:
         cnx = connectDb.getConn()
         with cnx.cursor() as cursor:
-            sql = 'UPDATE TB_EVENT SET eventName=\'{0}\', eventStarttime=\'{1}\', eventLocation=\'{2}\',\
-                eventPeriod=\'{3}\', eventFlag=\'{4}\' WHERE eventId=\'{5}\'\
-                '.format(eventName, eventStarttime, eventLocation, eventPeriod, eventFlag, eventId)
+            sql = 'UPDATE TB_EVENT SET eventFlag=\'{0}\' WHERE eventId=\'{1}\'\
+                '.format(eventFlag, eventId)
             cursor.execute(sql)
             resResult = cursor.fetchall()
+            if eventFlag == 1:
+                sqlend = 'UPDATE TB_EVENT SET eventEndTime=\'{0}\' WHERE eventId=\'{1}\''.format(int(time.time()), eventId)
+                print (sqlend)
+                cursor.execute(sqlend)
+            print ('result............' ,resResult)
             cnx.commit()           
     except Exception as err:
         resResult = "error occurred"
