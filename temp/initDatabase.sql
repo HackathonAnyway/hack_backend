@@ -8,7 +8,7 @@ CREATE TABLE TB_EVENT (
     eventId varchar(50) NOT NULL UNIQUE PRIMARY KEY,
     eventName varchar(100) NOT NULL,
     eventStarttime varchar(15),
-    enventLocation varchar(200) NOT NULL,
+    eventLocation varchar(200) NOT NULL,
     eventPeriod varchar(10) NOT NULL,
-    evetnFlag int NOT NULL
+    eventFlag int NOT NULL
 );
