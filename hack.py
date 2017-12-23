@@ -20,10 +20,12 @@ def deleteEvent(userId, eventId):
 @hug.get('/event/query', versions=VERSION)
 def queryEvent(userId):
     cnx = connectDb.getConn()
-    with connection.cursor() as cursor:
+    with cnx.cursor() as cursor:
         sql = 'show columns from TB_EVENT'
-        cursor.execute(sql, ('', 'very-secret'))
-        connection.commit()
+        cursor.execute(sql)
+        result = cursor.fetchall()
+        print (result)
+        cnx.commit()
 
     cnx.close()
     """
