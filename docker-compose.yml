@@ -1,0 +1,22 @@
+version: '2.1'
+services:
+  backend:
+    build: .
+    command: hug -f hack.py -p 8000
+    depends_on:
+      - mysql
+    volumes:
+      - .:/backend
+    ports:
+      - "8000:8000"
+    restart: always
+  mysql:
+    image: mysql/mysql-server
+    volumes:
+      - ./temp:/docker-entrypoint-initdb.d
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+    container_name: mysql
+    restart: always
