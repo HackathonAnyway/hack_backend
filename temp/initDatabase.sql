@@ -12,3 +12,8 @@ CREATE TABLE TB_EVENT (
     eventPeriod varchar(10) NOT NULL,
     eventFlag int NOT NULL
 );
+
+CREATE TABLE TB_USER (
+    userId varchar(100) NOT NULL UNIQUE PRIMARY KEY,
+    userPassword varchar(200) NOT NULL
+);
