@@ -14,7 +14,14 @@ def happy_birthday(name, age:hug.types.number=1):
 
 VERSION = 1
 @hug.post('/event/add', versions=VERSION)
-def addEvent(userId, eventName, location, period, flag:hug.types.number=0, startTime=int(time.time())):
+def addEvent(startTime, userId, eventName, location, period, flag:hug.types.number=0):
+    period = period / 1000
+    if startTime == 0:
+        startTime = int(time.time())
+    else: 
+        startTime = int(startTime / 1000)
+    print ('Uuuuuuu', startTime)
+    print ('Uuuuuuu', type(startTime))
     try:
         cnx = connectDb.getConn()
         with cnx.cursor() as cursor:
@@ -190,7 +197,7 @@ def postLocation():
     try:
         cnx = connectDb.getConn()
         with cnx.cursor() as cursor:
-            sql = 'SELECT * FROM TB_LOCATION'.format(location)
+            sql = 'SELECT * FROM TB_LOCATION'
             print (sql)
             cursor.execute(sql)
             resResult = cursor.fetchall()
