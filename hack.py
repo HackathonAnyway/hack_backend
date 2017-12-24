@@ -5,10 +5,6 @@ import connectDb
 import uuid
 from falcon import HTTP_400
 import time
-<<<<<<< HEAD
-=======
-
->>>>>>> bd0d90832dedbcdbfae053952b7ec74beb14166d
 
 @hug.post('/happy_birthday')
 def happy_birthday(name, age:hug.types.number=1):
@@ -18,11 +14,7 @@ def happy_birthday(name, age:hug.types.number=1):
 
 VERSION = 1
 @hug.post('/event/add', versions=VERSION)
-<<<<<<< HEAD
-def addEvent(userId, eventName, location, startTime, period, flag:hug.types.number=0):
-=======
 def addEvent(userId, eventName, location, period, flag:hug.types.number=0, startTime=int(time.time())):
->>>>>>> bd0d90832dedbcdbfae053952b7ec74beb14166d
     try:
         cnx = connectDb.getConn()
         with cnx.cursor() as cursor:
@@ -91,11 +83,7 @@ def queryEvent(userId, eventId="DEFAULT"):
                 sql = 'SELECT * FROM TB_EVENT WHERE eventId=\'{0}\' AND userId=\'{1}\''.format(eventId, userId)
             cursor.execute(sql)
             resResult = cursor.fetchall()
-<<<<<<< HEAD
             # print (resResult)
-=======
-            print (resResult)
->>>>>>> bd0d90832dedbcdbfae053952b7ec74beb14166d
             cnx.commit()
     except Exception as err:
         resResult = "error occurred"
@@ -103,11 +91,7 @@ def queryEvent(userId, eventId="DEFAULT"):
     finally:
         print (cnx)
         cnx.close()
-<<<<<<< HEAD
         # print ('returning ..... >>>', resResult)
-=======
-        print ('returning ..... >>>', resResult)
->>>>>>> bd0d90832dedbcdbfae053952b7ec74beb14166d
         return resResult
 
 @hug.post('/event/modify', versions=VERSION)
@@ -179,8 +163,6 @@ def registerUser(userId, userPassword):
         print (err)
     finally:
         cnx.close()
-<<<<<<< HEAD
-=======
         return resResult
 
 @hug.post('/location/post', versions=VERSION)
@@ -219,5 +201,4 @@ def postLocation():
         print (err)
     finally:
         cnx.close()
->>>>>>> bd0d90832dedbcdbfae053952b7ec74beb14166d
         return resResult
