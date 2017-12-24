@@ -5,6 +5,10 @@ import connectDb
 import uuid
 from falcon import HTTP_400
 import time
+<<<<<<< HEAD
+=======
+
+>>>>>>> bd0d90832dedbcdbfae053952b7ec74beb14166d
 
 @hug.post('/happy_birthday')
 def happy_birthday(name, age:hug.types.number=1):
@@ -14,7 +18,11 @@ def happy_birthday(name, age:hug.types.number=1):
 
 VERSION = 1
 @hug.post('/event/add', versions=VERSION)
+<<<<<<< HEAD
 def addEvent(userId, eventName, location, startTime, period, flag:hug.types.number=0):
+=======
+def addEvent(userId, eventName, location, period, flag:hug.types.number=0, startTime=int(time.time())):
+>>>>>>> bd0d90832dedbcdbfae053952b7ec74beb14166d
     try:
         cnx = connectDb.getConn()
         with cnx.cursor() as cursor:
@@ -83,14 +91,23 @@ def queryEvent(userId, eventId="DEFAULT"):
                 sql = 'SELECT * FROM TB_EVENT WHERE eventId=\'{0}\' AND userId=\'{1}\''.format(eventId, userId)
             cursor.execute(sql)
             resResult = cursor.fetchall()
+<<<<<<< HEAD
             # print (resResult)
+=======
+            print (resResult)
+>>>>>>> bd0d90832dedbcdbfae053952b7ec74beb14166d
             cnx.commit()
     except Exception as err:
         resResult = "error occurred"
         print (err)
     finally:
+        print (cnx)
         cnx.close()
+<<<<<<< HEAD
         # print ('returning ..... >>>', resResult)
+=======
+        print ('returning ..... >>>', resResult)
+>>>>>>> bd0d90832dedbcdbfae053952b7ec74beb14166d
         return resResult
 
 @hug.post('/event/modify', versions=VERSION)
@@ -162,4 +179,45 @@ def registerUser(userId, userPassword):
         print (err)
     finally:
         cnx.close()
+<<<<<<< HEAD
+=======
+        return resResult
+
+@hug.post('/location/post', versions=VERSION)
+def postLocation(location):
+    print (location)
+    # try:
+    cnx = connectDb.getConn()
+    with cnx.cursor() as cursor:
+        sql = 'INSERT INTO TB_LOCATION VALUES(\'{0}\')'.format(location)
+        print (sql)
+        cursor.execute(sql)
+        resResult = "success"
+        cnx.commit()
+        cnx.close()
+    # except Exception as err:
+        # resResult = "error occurred"
+        # response.status = HTTP_400
+        # print (err)
+    # finally:
+    #     cnx.close()
+    #     return resResult
+
+@hug.get('/location/get', versions=VERSION)
+def postLocation():
+    try:
+        cnx = connectDb.getConn()
+        with cnx.cursor() as cursor:
+            sql = 'SELECT * FROM TB_LOCATION'.format(location)
+            print (sql)
+            cursor.execute(sql)
+            resResult = cursor.fetchall()
+            cnx.commit()
+    except Exception as err:
+        resResult = "error occurred"
+        response.status = HTTP_400
+        print (err)
+    finally:
+        cnx.close()
+>>>>>>> bd0d90832dedbcdbfae053952b7ec74beb14166d
         return resResult
