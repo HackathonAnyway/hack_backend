@@ -2,6 +2,7 @@ import requests
 import json
 import re
 def locatePoint(location):
+    #input location  , return lng lat
     try:
         url = "http://api.map.baidu.com/geocoder/v2/?address={0}&ret_coordtype=gcj02ll&city=南京市&output=json&ak=WkaSDu7nrqKQBIeOFyKeUT6wQpLGQ5te".format(location)
         # print(url)
@@ -17,16 +18,16 @@ def locatePoint(location):
         lat = -1
     return lng, lat
 
-def getCarTime(origin_lng, origin_lat, destination_lng, destination_lat, tactics="13", vehicle="walking"):
+def getCarTime(origin_lng, origin_lat, destination_lng, destination_lat, tactics="13", vehicle="driving"):
     try:
         #http://api.map.baidu.com/routematrix/v2/driving?output=json&
         # origins=40.45,116.34|40.54,116.35&destinations=40.34,116.45|40.35,116.46&ak=您的ak
         url = "http://api.map.baidu.com/routematrix/v2/{0}?tactics={1}&coord_type=gcj02&output=json&origins={2},{3}&destinations={4},{5}&ak=WkaSDu7nrqKQBIeOFyKeUT6wQpLGQ5te".format(vehicle, tactics, origin_lat, origin_lng, destination_lat, destination_lng)
-        print(url)
+        # print(url)
         r = requests.get(url)
-        print(r.text)
+        # print(r.text)
         time = json.loads(r.text)['result'][0]['duration']['text']
-        print("获取到的time 的 str : "+time)
+        # print("获取到的time 的 str : "+time)
         # 单位 小时 or 分钟
         nuit = ''.join(re.findall('[\u4e00-\u9fa5]+', time))
         # float类型 数据
