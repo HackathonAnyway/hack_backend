@@ -1,7 +1,7 @@
 import pymysql.cursors
 
 def getConn():
-    cnx = pymysql.connect(   host='172.20.10.3',
+    cnx = pymysql.connect(   host='172.21.0.2',
                              user='root',
                              password='123456',
                              db='hackforchristmas',
